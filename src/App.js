@@ -1,53 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
+import Photo from "./imageInSrc.png";
 import './App.css';
-
-function App() {
-  return (
+import $ from 'jquery';
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+    show:true,
+    person:{fullName:"Ichrak-Shili",bio:"Just Smile",imgSrc:Photo ,profession:"Student"},
+    date:new Date()
     
-      <div className="container">
-        <h1 align="center"><span class="badge badge-light">FORM</span></h1>
-    <form>
-      
-  <div className="form-row">
-    <div className="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4"/>
-    </div>
-    <div className="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4"/>
-    </div>
-  </div>
-  <div className="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" className="form-control" id="inputAddress" />
-  </div>
-  
-  <div className="form-row">
-    <div className="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" className="form-control" id="inputCity"/>
-    </div>
-    <div className="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" className="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div className="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" className="form-control" id="inputZip"/>
-    </div>
-  </div>
-  
-  <button type="submit" className="btn btn-success" float="right" >Sign in</button>
-</form>
+    }
 
-</div>   
+  }
+  handleClick=()=>{
     
-  );
-}
+    this.setState({show:!this.state.show});
+    console.log(this.state.show);
+    $('img').toggle();
+    
+  }
+  componentDidMount()
+  {
+    this.timerID=setInterval(()=>{this.setState({date:new Date()});},1000);
+  }
+  componentWillUnmount(){
+    clearInterval(this.timerID);
+  }
+  
+  render(){
+    return(
+      <div style={{textAlign:"center",width:"30%" , height:"41%",border:"1px solid black",position:"relative",left:"35%"}}>
+        <div><span>{this.state.person.fullName}</span></div>
+        <div><span>{this.state.person.bio}</span></div>
+        <div><span>{this.state.person.profession}</span></div>
+        <img src={this.state.person.imgSrc} alt="it's me"/><br/>
+        
+        <button onClick={this.handleClick}>click me</button>  <br/>
+        <div ><span style={{width:"20%",border:"1px solid red"}}>It's <strong>{this.state.date.toLocaleTimeString()}</strong></span></div>
+      </div>
+    );
+  }
+
+
+};
+
 
 export default App;
